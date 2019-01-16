@@ -1,0 +1,19 @@
+{
+  "name": "onlinemarketplace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olstob/OnlineMarketplace.git"
+  },
+  "author": "Olivier St-Onge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olstob/OnlineMarketplace/issues"
+  },
+  "homepage": "https://github.com/olstob/OnlineMarketplace#readme"
+}
