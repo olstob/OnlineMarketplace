@@ -1,7 +1,9 @@
 import express from "express";
+import expressGraphQL from "express-graphql";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import schema from "./graphql";
 
 const app = express();
 const PORT = process.env.PORT || "4000";
@@ -20,8 +22,13 @@ mongoose
   .catch(err => console.log(err));
 
 app.use(
+    "/graphql",
     cors(),
-    bodyParser.json()
+    bodyParser.json(),
+    expressGraphQL({
+      schema,
+      graphiql: true
+    })
 );
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
