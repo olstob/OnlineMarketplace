@@ -16,6 +16,16 @@ export default {
                     err ? reject(err) : resolve(res);
                 });
             });
+        },
+        cart: () => {
+            return new Promise((resolve, reject) => {
+                resolve({
+                    "items": [
+                        { "product": "title fictif", "quantity": 5 }
+                    ],
+                    "total_price": 25.50
+                });
+            });
         }
     }
 }
