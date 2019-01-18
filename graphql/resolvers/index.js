@@ -4,7 +4,6 @@ export default {
     Query: {
         product: (root, args) => {
             return new Promise((resolve, reject) => {
-                console.log(args);
                 Product.findOne(args).exec((err, res) => {
                     err ? reject(err) : resolve(res);
                 });
