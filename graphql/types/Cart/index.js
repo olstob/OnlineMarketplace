@@ -12,4 +12,9 @@ export default `
     type Query {
         cart: Cart
     }
+
+    type Mutation {
+        createCart: Cart
+        addProduct(title: String!, quantity: Int): Cart
+    }
 `;
