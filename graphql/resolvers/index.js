@@ -39,7 +39,7 @@ export default {
                 Product.findOne(filter).exec((err, product) => {
                     if(err) return reject(err);
                     else if(!product) return reject("Product nonavailable");
-                    cart.addItem(product.title, product.price, qtyToAdd);
+                    cart.addProduct(product.title, product.price, qtyToAdd);
                     resolve(cart);
                 });
             });
@@ -47,9 +47,9 @@ export default {
         checkout: () => {
             let promises = [];
 
-            for(let item of cart.items) {
-                const filter = { title: item.product, inventory_count: { $gte: item.quantity } };
-                const update = { $inc: { inventory_count: -item.quantity }};
+            for(let purchase of cart.purchases) {
+                const filter = { title: purchase.product_title, inventory_count: { $gte: purchase.quantity } };
+                const update = { $inc: { inventory_count: -purchase.quantity }};
                 let promise = Product.findOneAndUpdate(filter, update);
                 promises.push(promise);
             }

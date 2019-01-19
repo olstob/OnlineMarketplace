@@ -1,11 +1,11 @@
 export default `
-    type Item {
-        product: String!
+    type Purchase {
+        product_title: String!
         quantity: Int!
     }
 
     type Cart {
-        items: [Item]!
+        purchases: [Purchase]!
         total_price: Float!
     }
 

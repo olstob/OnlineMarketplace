@@ -2,39 +2,37 @@ class Cart {
 
     constructor() {
         this.reset = () => {
-            this.items = [];
+            this.purchases = [];
             this.total_price = 0;
         };
         this.reset();
     }
 
-    addItem(title, price, quantity) {
-        const product = this.findProduct(title);
+    addProduct(title, price, quantity) {
+        if(quantity < 1) return;
+        const existingPurchase = this.findPurchase(title);
 
-        if(product) {
-            product.quantity += quantity;
+        if(existingPurchase) {
+            existingPurchase.quantity += quantity;
         } else {
-            const item = {"product": title, "quantity": quantity};
-            this.items.push(item);
+            const newPurchase = {"product_title": title, "quantity": quantity};
+            this.purchases.push(newPurchase);
         }
         const cost = quantity * price;
         this.total_price += cost;
     }
 
-    getQuantityOfProduct(title) {
-        const product = this.findProduct(title);
-        return product ? product.quantity : 0;
+    getQuantityOfProduct(productTitle) {
+        const purchase = this.findPurchase(productTitle);
+        return purchase ? purchase.quantity : 0;
     }
 
-    findProduct(title) {
-        return this.items.find((item) => {
-            return item.product === title;
+    findPurchase(productTitle) {
+        return this.purchases.find((purchase) => {
+            return purchase.product_title === productTitle;
         });
     }
 
-    toGraphQL() {
-        return {"items": this.items, "total_price": this.total_price};
-    }
 }
 
 export let cart = new Cart();
