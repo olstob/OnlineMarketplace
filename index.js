@@ -7,7 +7,12 @@ import schema from "./graphql";
 
 const app = express();
 const PORT = process.env.PORT || "4000";
+
+// Using mLab to host a products database
 const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds159184.mlab.com:59184/db_tea";
+
+// collection.findAndModify is deprecated, but using findOneAndUpdate still calls it internally
+mongoose.set('useFindAndModify', false);
 
 // Connect to MongoDB with Mongoose.
 mongoose
