@@ -20,14 +20,14 @@ export default {
             });
         },
         cart: () => {
-            return cart.toGraphQL();
+            return cart
         }
     },
     Mutation: {
         createCart: () => {
             cart.reset();
 
-            return cart.toGraphQL();
+            return cart;
         },
         addProduct: (root, args) => {
             const qtyInCart = cart.getQuantityOfProduct(args.title);
@@ -40,7 +40,7 @@ export default {
                     if(err) return reject(err);
                     else if(!product) return reject("Product nonavailable");
                     cart.addItem(product.title, product.price, qtyToAdd);
-                    resolve(cart.toGraphQL());
+                    resolve(cart);
                 });
             });
         },
@@ -57,7 +57,7 @@ export default {
             return new Promise((resolve, reject) => {
                 Promise.all(promises)
                 .then(() => {
-                    resolve(cart.toGraphQL());
+                    resolve(cart);
                     cart.reset();
                 }).catch(err => {
                     reject(err);
