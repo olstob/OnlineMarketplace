@@ -1,63 +1,68 @@
 import Product from "../../models/Product";
-import Cart from "../../models/Cart";
+import { cart } from "../../cart";
+import { GraphQLError } from "graphql";
 
 export default {
     Query: {
         product: (root, args) => {
             return new Promise((resolve, reject) => {
-                Product.findOne(args).exec((err, res) => {
-                    err ? reject(err) : resolve(res);
+                Product.findOne(args).exec((err, product) => {
+                    err ? reject(err) : resolve(product);
                 });
             });
         },
         products: (root, args) => {
             return new Promise((resolve, reject) => {
                 const operator = args.in_stock ? { inventory_count: { $gt: 0 }} : {};
-                Product.find(operator).populate().exec((err, res) => {
-                    err ? reject(err) : resolve(res);
+                Product.find(operator).populate().exec((err, products) => {
+                    err ? reject(err) : resolve(products);
                 });
             });
         },
         cart: () => {
-            return new Promise((resolve, reject) => {
-                Cart.findOne().exec((err, res) => {
-                    err ? reject(err) : resolve(res);
-                });
-            });
+            return cart.toGraphQL();
         }
     },
     Mutation: {
         createCart: () => {
-            const newCart = new Cart({ items: [], total_price: 0.0});
-            return new Promise((resolve, reject) => {
-                newCart.save((err, res) => {
-                    err ? reject(err) : resolve(res);
-                });
-            });
+            cart.reset();
+
+            return cart.toGraphQL();
         },
         addProduct: (root, args) => {
+            const qtyInCart = cart.getQuantityOfProduct(args.title);
+            let qtyToAdd = "quantity" in args ? args.quantity : 1;
+            if(qtyToAdd < 1) throw new GraphQLError("The desired quantity needs to be greater than 0");
+
+            let filter = { title: args.title, inventory_count: { $gte: qtyInCart + qtyToAdd } };
             return new Promise((resolve, reject) => {
-                let qty = 0;
-                if(args.quantity) {
-                    qty = args.quantity;
-                    args.inventory_count = { $gte: args.quantity};
-                    delete args.quantity;
-                }
-
-                Product.findOne(args).exec()
-                .then(product => {
-                    if(!product) return reject("Product nonavailable");
-                    console.log("found product:", product);
-                    const cost = product.price * qty;
-
-                    return Cart.findOneAndUpdate({}, { $push: { items: { product: product.title, quantity: qty}}, $inc: { total_price: cost}}).exec();
-                })
-                .then(cart => {
-                    if(!cart) return reject("No cart have been found");
-                    console.log("found cart:", cart);
-                    resolve(cart);
+                Product.findOne(filter).exec((err, product) => {
+                    if(err) return reject(err);
+                    else if(!product) return reject("Product nonavailable");
+                    cart.addItem(product.title, product.price, qtyToAdd);
+                    resolve(cart.toGraphQL());
                 });
             });
         },
+        checkout: () => {
+            let promises = [];
+
+            for(let item of cart.items) {
+                const filter = { title: item.product, inventory_count: { $gte: item.quantity } };
+                const update = { $inc: { inventory_count: -item.quantity }};
+                let promise = Product.findOneAndUpdate(filter, update);
+                promises.push(promise);
+            }
+
+            return new Promise((resolve, reject) => {
+                Promise.all(promises)
+                .then(() => {
+                    resolve(cart.toGraphQL());
+                    cart.reset();
+                }).catch(err => {
+                    reject(err);
+                })
+            });
+        }
     }
 }

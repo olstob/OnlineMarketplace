@@ -16,5 +16,6 @@ export default `
     type Mutation {
         createCart: Cart
         addProduct(title: String!, quantity: Int): Cart
+        checkout: Cart
     }
 `;
