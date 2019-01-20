@@ -1,4 +1,6 @@
-build
+build/
+config/*.json
+!config/default.json
 
 # Logs
 logs

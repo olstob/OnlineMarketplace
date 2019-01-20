@@ -5,18 +5,23 @@ import cors from "cors";
 import mongoose from "mongoose";
 import schema from "./graphql";
 import marked from "marked";
-import path from "path";
+import config from 'config';
 import * as fs from "fs";
+
+const getConfig = (key) => {
+  if(config.has(key)) {
+    return config.get(key);
+  }
+  console.log("Did not find the key DB_URL in the env variables or the config file.")
+  process.exit(0);
+};
 
 const app = express();
 const PORT = process.env.PORT || "8000";
-
 const README = "/../README.md"
-
 // Using mLab to host a products database.
-// I normally would place the user and password in a untracked config file,
-// but I decided to leave it here so you could actually test the api.
-const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds161764.mlab.com:61764/db_s2019_challenge";
+const DB_URL = process.env.DB_URL || getConfig("DB_URL");
+
 
 // collection.findAndModify is deprecated, but using findOneAndUpdate still calls it internally
 mongoose.set('useFindAndModify', false);
