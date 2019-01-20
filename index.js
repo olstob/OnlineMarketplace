@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import schema from "./graphql";
 
 const app = express();
-const PORT = process.env.PORT || "4000";
+const PORT = process.env.PORT || "8000";
 
 // Using mLab to host a products database
 const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds161764.mlab.com:61764/db_s2019_challenge";
