@@ -4,6 +4,7 @@ export default {
     Query: {
         product: (root, args) => {
             return new Promise((resolve, reject) => {
+                args.title = args.title.toLowerCase();
                 Product.findOne(args).exec((err, product) => {
                     err ? reject(err) : resolve(product);
                 });

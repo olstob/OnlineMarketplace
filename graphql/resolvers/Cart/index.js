@@ -19,7 +19,7 @@ export default {
             let qtyToAdd = "quantity" in args ? args.quantity : 1;
             if(qtyToAdd < 1) throw new GraphQLError("The desired quantity needs to be greater than 0");
 
-            let filter = { title: args.title, inventory_count: { $gte: qtyInCart + qtyToAdd } };
+            let filter = { title: args.title.toLowerCase(), inventory_count: { $gte: qtyInCart + qtyToAdd } };
             return new Promise((resolve, reject) => {
                 Product.findOne(filter).exec((err, product) => {
                     if(err) return reject(err);
