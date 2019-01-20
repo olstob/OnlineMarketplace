@@ -118,7 +118,7 @@ query {
 Create a new shopping cart:
 ```
 mutation {
-	createCart {
+  createCart {
     purchases {
       product_title
       quantity
