@@ -3,6 +3,7 @@ class Cart {
     constructor() {
         // Defined the method reset() here to make it accessible from the constructor
         this.reset = () => {
+            // Each purchase corresponds to the type Purchase defined in ./graphql/types/Cart/index.js
             this.purchases = [];
             this.total_price = "0.00";
         };

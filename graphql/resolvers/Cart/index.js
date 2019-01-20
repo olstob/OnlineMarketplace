@@ -10,12 +10,14 @@ export default {
     },
     Mutation: {
         createCart: () => {
+            // Empty the current cart and set the total price to 0
             cart.reset();
-
             return cart;
         },
         addProduct: (root, args) => {
+            // In case the product was already in the cart, with consider the total quantity
             const qtyInCart = cart.getQuantityOfProduct(args.title);
+            // 1 being the default value when adding a product
             let qtyToAdd = "quantity" in args ? args.quantity : 1;
             if(qtyToAdd < 1) throw new GraphQLError("The desired quantity needs to be greater than 0");
 
@@ -46,6 +48,7 @@ export default {
                     resolve(JSON.parse(JSON.stringify(cart)));
                     cart.reset();
                 }).catch(err => {
+                    // Promise.all will reject if at least 1 promise failed
                     reject(err);
                 })
             });

@@ -25,7 +25,8 @@ Now for the mutations:
 ```
 createCart: Cart                                    # Create a new, empty shopping cart
 addProduct(title: String!, quantity: Int): Cart     # Add a product to the shopping cart
-checkout: Cart                                      # Reduce the inventory of all the products in the cart and create a new one.
+checkout: Cart                                      # Reduce the inventory of all the products in the cart, 
+                                                    # returns this cart and create a new one.
 ```
 The parameter `quantity` of the mutation `addProduct` is optional. If a quantity is given, it will add the correct number of products in the shopping cart. Otherwise, it will use the default value of 1.
 
