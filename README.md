@@ -15,17 +15,17 @@ make sure to visit http://localhost:4000/graphql in order to run some queries & 
 
 Here are the queries that you can use:
 ```
-product(title: String!): Product
-products(in_stock: Boolean): [Product]
-cart: Cart
+product(title: String!): Product          # Fetch a specific product
+products(in_stock: Boolean): [Product]    # Fetch all products, or only those with available inventory
+cart: Cart                                # Fetch the current shopping cart
 ```
 As you can see, the query `products` has a optional parameter. Passing `in_stock: true` filters the products and returns only those with available inventory. 
 
 Now for the mutations:
 ```
-createCart: Cart
-addProduct(title: String!, quantity: Int): Cart
-checkout: Cart
+createCart: Cart                                    # Create a new, empty shopping cart
+addProduct(title: String!, quantity: Int): Cart     # Add a product to the shopping cart
+checkout: Cart                                      # Reduce the inventory of all the products in the cart and create a new one.
 ```
 The parameter `quantity` of the mutation `addProduct` is optional. If a quantity is given, it will add the correct number of products in the shopping cart. Otherwise, it will use the default value of 1.
 
@@ -59,7 +59,7 @@ type Cart {
 ```
 **Note:** The `total_price` field of the type `Cart` is of type String instead of Float. I decided to use String in order to accurately represent currency (ex: 12.30 instead of 12.3). Usually, I would have kept it as a Float and let the frontend format it, but in this case I don't have a frontend.
 
-## Exemples
+## Examples
 
 Returning the product with the title "Mini Red Berries":
 ```
@@ -97,6 +97,58 @@ Returning the current cart:
 query {
   cart {
     purchases {
+      product_title
+      quantity
+    }
+    total_price
+  }
+}
+```
+
+Create a new shopping cart:
+```
+mutation {
+	createCart {
+    purchases {
+      product_title
+      quantity
+    }
+    total_price
+  }
+}
+```
+
+Add the product "licorice" to the cart:
+```
+mutation {
+  addProduct(title: "licorice") {
+    purchases {
+      product_title
+      quantity
+    }
+    total_price
+  }
+}
+```
+
+Add three products "licorice" to the cart:
+```
+mutation {
+  addProduct(title: "licorice", quantity: 3) {
+    purchases {
+      product_title
+      quantity
+    }
+    total_price
+  }
+}
+```
+
+Checkout the current cart:
+```
+mutation {
+  checkout {
+     purchases{
       product_title
       quantity
     }
