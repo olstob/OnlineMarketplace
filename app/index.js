@@ -8,7 +8,9 @@ import schema from "./graphql";
 const app = express();
 const PORT = process.env.PORT || "8000";
 
-// Using mLab to host a products database
+// Using mLab to host a products database.
+// I normally would place the user and password in a untracked config file,
+// but I decided to leave it here so you could actually test the api.
 const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds161764.mlab.com:61764/db_s2019_challenge";
 
 // collection.findAndModify is deprecated, but using findOneAndUpdate still calls it internally
