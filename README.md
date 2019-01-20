@@ -2,12 +2,20 @@
 This challenge was completed in Javascript ES6, using Node, Express, and GraphQL. The products (in this case candies) are stored on mLab. The data was taken from https://kandju.com/collections/all.
 
 ## Usage
+
+### Locally
 Once you've entered the usual commands:
 ```
 npm install
 npm start
 ```
-make sure to visit http://localhost:4000/graphql in order to run some queries & mutations using GraphiQL. Some useful keyboard shortcuts are:
+make sure to visit http://localhost:8000/graphql in order to run some queries & mutations using GraphiQL. 
+
+### On Heroku
+The app is deployed on Heroku at the address https://olstob-s2019-shopify.herokuapp.com/graphql
+
+### GraphiQL
+Some useful keyboard shortcuts are:
 - Ctrl+Enter -> Run the query
 - Ctrl+Space -> Auto Complete
 
