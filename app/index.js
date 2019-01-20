@@ -44,8 +44,8 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  var path = __dirname + README;
-  var file = fs.readFileSync(path, 'utf8');
+  const path = __dirname + README;
+  const file = fs.readFileSync(path, 'utf8');
   res.send(marked(file.toString()));
 });
 
