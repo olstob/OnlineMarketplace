@@ -3,7 +3,7 @@ class Cart {
     constructor() {
         this.reset = () => {
             this.purchases = [];
-            this.total_price = 0;
+            this.total_price = "0.00";
         };
         this.reset();
     }
@@ -18,8 +18,13 @@ class Cart {
             const newPurchase = {"product_title": title, "quantity": quantity};
             this.purchases.push(newPurchase);
         }
-        const cost = quantity * price;
-        this.total_price += cost;
+
+        // New total as a float
+        const total_price_float = parseFloat(this.total_price) + quantity * price;
+        // Rounding to two decimals
+        const rounded_price = Math.round(total_price_float * 100) / 100;
+        // Adding zeros at the end if necessary
+        this.total_price = rounded_price.toFixed(2);
     }
 
     getQuantityOfProduct(productTitle) {

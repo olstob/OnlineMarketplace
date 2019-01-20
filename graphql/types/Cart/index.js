@@ -6,7 +6,7 @@ export default `
 
     type Cart {
         purchases: [Purchase]!
-        total_price: Float!
+        total_price: String!
     }
 
     type Query {

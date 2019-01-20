@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || "4000";
 
 // Using mLab to host a products database
-const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds159184.mlab.com:59184/db_tea";
+const DB_URL = "mongodb://shopify_s2019_challenge:BJ6tr64XEUWvWGv@ds161764.mlab.com:61764/db_s2019_challenge";
 
 // collection.findAndModify is deprecated, but using findOneAndUpdate still calls it internally
 mongoose.set('useFindAndModify', false);

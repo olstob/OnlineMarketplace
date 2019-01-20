@@ -42,7 +42,8 @@ export default {
             return new Promise((resolve, reject) => {
                 Promise.all(promises)
                 .then(() => {
-                    resolve(cart);
+                    // Using the stringify and parse methods to deep copy the data before the cart reset
+                    resolve(JSON.parse(JSON.stringify(cart)));
                     cart.reset();
                 }).catch(err => {
                     reject(err);
