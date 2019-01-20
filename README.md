@@ -29,7 +29,7 @@ checkout: Cart
 ```
 The parameter `quantity` of the mutation `addProduct` is optional. If a quantity is given, it will add the correct number of products in the shopping cart. Otherwise, it will use the default value of 1.
 
-**Note:** A cart is created automatically when the server is started. Because of this, it is not necessary to use `createCart` before adding a product. However, it can be used to discard the current cart and start again with an empty one without reducing the inventory.
+**Note:** An empty cart is created automatically when the server is started. Because of this, it is not necessary to use `createCart` before adding a product. Additionally, this mutation can be used to discard the shopping cart and get an empty one without reducing the inventory.
 
 ## Types
 
