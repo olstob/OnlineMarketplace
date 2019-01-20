@@ -1,6 +1,7 @@
 class Cart {
 
     constructor() {
+        // Defined the method reset() here to make it accessible from the constructor
         this.reset = () => {
             this.purchases = [];
             this.total_price = "0.00";
@@ -10,6 +11,8 @@ class Cart {
 
     addProduct(title, price, quantity) {
         if(quantity < 1) return;
+
+        // Checks if the product was already in the cart
         const existingPurchase = this.findPurchase(title);
 
         if(existingPurchase) {
