@@ -4,12 +4,22 @@ This challenge was completed in Javascript ES6, using Node, Express, and GraphQL
 ## Usage
 
 ### Locally
-Once you've entered the usual commands:
+The server needs the DB_URL key set in a config file.
+To do this, create a file called local.json and place it in the folder config/.
+The file should look like this:
+```
+{
+    "DB_URL": "mongodb://<DB_USER>:<DB_PASSWORD>@ds161764.mlab.com:61764/db_s2019_challenge"
+}
+```
+
+Then you can run the usual commands:
 ```
 npm install
 npm start
 ```
-make sure to visit http://localhost:8000/graphql in order to run some queries & mutations using GraphiQL. 
+
+Once all of this is done, visit http://localhost:8000/graphql in order to run some queries & mutations using GraphiQL. 
 
 ### On Heroku
 The app is deployed on Heroku at the address https://olstob-s2019-shopify.herokuapp.com/graphql.
