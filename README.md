@@ -12,7 +12,8 @@ npm start
 make sure to visit http://localhost:8000/graphql in order to run some queries & mutations using GraphiQL. 
 
 ### On Heroku
-The app is deployed on Heroku at the address https://olstob-s2019-shopify.herokuapp.com/graphql
+The app is deployed on Heroku at the address https://olstob-s2019-shopify.herokuapp.com/graphql.
+I use a free dyno, meaning that the app goes to sleep after 30 minutes of inactivity. Because of this, the first request can be slow. 
 
 ### GraphiQL
 Some useful keyboard shortcuts are:
